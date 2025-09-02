@@ -5,11 +5,6 @@ use App\Http\Controllers\PharmacyDashboardController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\QuotationController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-*/
 
 Route::get('/', function () {
     return view('welcome');

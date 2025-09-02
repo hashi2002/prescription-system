@@ -10,16 +10,7 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Register Controller
-    |--------------------------------------------------------------------------
-    |
-    | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
-    | provide this functionality without requiring any additional code.
-    |
-    */
+    
 
     use RegistersUsers;
 
@@ -28,7 +19,13 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected function redirectTo()
+{
+    if (auth()->user()->user_type === 'pharmacy') {
+        return '/pharmacy-dashboard';
+    }
+    return '/user-dashboard'; 
+}
 
     /**
      * Create a new controller instance.
@@ -47,13 +44,17 @@ class RegisterController extends Controller
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
-    }
+{
+    return Validator::make($data, [
+        'name' => ['required', 'string', 'max:255'],
+        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+        'address' => ['required', 'string'],
+        'contact_no' => ['required', 'string'],
+        'dob' => ['required', 'date'],
+        'user_type' => ['required', 'string', 'in:user,pharmacy'], 
+    ]);
+}
 
     /**
      * Create a new user instance after a valid registration.
@@ -62,11 +63,15 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-    }
+{
+    return User::create([
+        'name' => $data['name'],
+        'email' => $data['email'],
+        'password' => Hash::make($data['password']),
+        'address' => $data['address'],      
+        'contact_no' => $data['contact_no'], 
+        'dob' => $data['dob'],             
+        'user_type' => $data['user_type'],
+    ]);
+}
 }

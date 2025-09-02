@@ -10,19 +10,21 @@ class Kernel extends HttpKernel
      * The application's global HTTP middleware stack.
      */
     protected $middleware = [
-        // ... global middleware
-    ];
+    \Illuminate\Http\Middleware\HandleCors::class, 
+
+   
+];
 
     /**
      * The application's route middleware groups.
      */
     protected $middlewareGroups = [
         'web' => [
-            // ... web middleware
+          
         ],
 
         'api' => [
-            // ... api middleware
+          
         ],
     ];
 
@@ -33,6 +35,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'user.type' => \App\Http\Middleware\EnsureUserType::class,
         'user' => \App\Http\Middleware\UserMiddleware::class,
-        // ... other middleware
+        'pharmacy' => \App\Http\Middleware\EnsurePharmacyUser::class,
+        
     ];
 }

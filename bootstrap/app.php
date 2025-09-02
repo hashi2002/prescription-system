@@ -11,10 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        // Register your custom middleware here
+        // Register custom middleware 
         $middleware->alias([
             'user.type' => \App\Http\Middleware\EnsureUserType::class,
             'user' => \App\Http\Middleware\UserMiddleware::class,
+            'pharmacy' => \App\Http\Middleware\EnsurePharmacyUser::class, 
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

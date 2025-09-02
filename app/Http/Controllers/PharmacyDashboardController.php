@@ -6,11 +6,8 @@ use Illuminate\Http\Request;
 
 class PharmacyDashboardController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['auth', 'pharmacy']);
-    }
-
+    // Remove the __construct method - middleware is handled in routes
+    
     public function index()
     {
         $prescriptions = Prescription::with(['user', 'images', 'quotations' => function($query) {

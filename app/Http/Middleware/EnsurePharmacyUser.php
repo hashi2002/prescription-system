@@ -8,13 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsurePharmacyUser
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
     public function handle(Request $request, Closure $next): Response
     {
+        if (!auth()->check() || auth()->user()->user_type !== 'pharmacy') {
+            abort(403, 'Access denied. Pharmacy access required.');
+        }
+        
         return $next($request);
     }
 }
